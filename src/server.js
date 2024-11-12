@@ -13,7 +13,7 @@ dotenv.config()
 // endregion
 
 // region MongoDB
-const {initMongoDbConnection} = require("./src/db/mongodb");
+const {initMongoDbConnection} = require("./db/mongodb");
 initMongoDbConnection()
 // endregion
 

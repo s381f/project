@@ -1,10 +1,11 @@
-FROM node:22-alpine
-RUN mkdir -p /usr/src/app
-RUN mkdir -p /usr/src/app/views
-WORKDIR /usr/src/app
-COPY package.json /usr/src/app/
-COPY src/views/* /usr/src/app/views/
-COPY server.js /usr/src/app/
+FROM node:20
+
+COPY package*.json ./
+
 RUN npm install
-EXPOSE 8099
-CMD ["npm", "start"]
+
+COPY src ./src
+COPY .env ./.env
+
+EXPOSE 3000
+CMD [ "npm", "run", "start" ]

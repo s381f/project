@@ -1,7 +1,9 @@
 // region Express
 const express = require('express')
+const path = require('path')
 const app = express()
 app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, '../src/views'));
 const port = process.env.PORT || 3000
 // endregion
 
@@ -11,7 +13,7 @@ dotenv.config()
 // endregion
 
 // region MongoDB
-const {initMongoDbConnection} = require("./db/mongodb");
+const {initMongoDbConnection} = require("./src/db/mongodb");
 initMongoDbConnection()
 // endregion
 

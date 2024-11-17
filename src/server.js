@@ -39,6 +39,38 @@ app.get('/', (req, res) => {
   res.status(200).render('index')
 })
 
+app.get('/createBook', (req, res) => {
+  res.status(200).render('createBook')
+})
+
+app.get('/dashboard', (req, res) => {
+  res.status(200).render('dashboard')
+})
+
+app.get('/deleteBook', (req, res) => {
+  res.status(200).render('deleteBook')
+})
+
+app.get('/editBook', (req, res) => {
+  res.status(200).render('editBook')
+})
+
+app.get('/login', (req, res) => {
+  res.status(200).render('login')
+})
+
+app.get('/message', (req, res) => {
+  res.status(200).render('message')
+})
+
+app.get('/searchBooks', (req, res) => {
+  res.status(200).render('searchBooks')
+})
+
+app.get('/signup', (req, res) => {
+  res.status(200).render('signup')
+})
+
 app.get('/*', (req, res) => {
   res.status(404).render('message', {
     message: `${req.path.substring(1)} - Unknown request!`

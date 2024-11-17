@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Books</title>
+    
+</head>
+<body>
+    <div class="container">
+        <h2>Search Books</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% books.forEach(function(book) { %>
+                    <tr>
+                        <td><%= book.title %></td>
+                        <td><%= book.author %></td>
+                        <td>
+                            <a href="/books/<%= book._id %>/edit">Edit</a>
+                            <a href="/books/<%= book._id %>/delete">Delete</a>
+                        </td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+        <a href="/dashboard">Back to Dashboard</a>
+    </div>
+</body>
+</html>

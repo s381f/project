@@ -1,20 +1,33 @@
-// region Express
-const express = require('express')
-const path = require('path')
-const app = express()
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, '../src/views'));
-const port = process.env.PORT || 3000
-// endregion
-
 // region dotenv
 const dotenv = require('dotenv')
 dotenv.config()
 // endregion
 
+// region Express
+const express = require('express')
+const expressSession = require('express-session')
+const path = require('path')
+const app = express()
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, '../src/views'));
+app.use(expressSession({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: true,
+  cookie: {secure: true}
+}))
+const bodyParser = require('body-parser');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded());
+// in latest body-parser use like below.
+app.use(bodyParser.urlencoded({extended: true}));
+const port = process.env.PORT || 3000
+// endregion
+
+const bcrypt = require('bcrypt');
+
 // region MongoDB
-const {initMongoDbConnection} = require("./db/mongodb");
-initMongoDbConnection()
+const {User} = require("./db/mongodb");
 // endregion
 
 // region Swagger
@@ -30,12 +43,13 @@ swaggerAutogen(outputFile, ["./server.js"], doc).then();
 
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
+const userSchema = require("./models/user");
 app.use('/api-docs', swaggerUi.serve)
 app.get('/api-docs', swaggerUi.setup(swaggerDocument));
 // endregion
 
 
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
   res.status(200).render('index')
 })
 
@@ -59,16 +73,39 @@ app.get('/login', (req, res) => {
   res.status(200).render('login')
 })
 
-app.get('/message', (req, res) => {
-  res.status(200).render('message')
-})
-
 app.get('/searchBooks', (req, res) => {
   res.status(200).render('searchBooks')
 })
 
 app.get('/signup', (req, res) => {
   res.status(200).render('signup')
+})
+
+app.post('/signup', async (req, res) => {
+  let {username, password, confirm_password} = req.body;
+
+  let exists = await User.find({
+    username: username,
+  }).exec()
+
+  if (exists.length > 0) {
+    res.render("message", {
+      message: 'User already exists'
+    })
+  }
+
+  if (password && confirm_password && confirm_password !== password) {
+    res.render("message", {
+      message: 'Passwords do not match'
+    })
+  }
+
+  password = await bcrypt.hashSync(password, 10)
+
+  const user = new User({username, password})
+  await user.save()
+
+  return res.redirect('/')
 })
 
 app.get('/*', (req, res) => {

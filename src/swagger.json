@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "description": ""
   },
-  "host": "localhost:3000",
+  "host": "localhost:3030",
   "basePath": "/",
   "schemes": [
     "http"
@@ -81,16 +81,6 @@
         }
       }
     },
-    "/message": {
-      "get": {
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/searchBooks": {
       "get": {
         "description": "",
@@ -107,6 +97,34 @@
         "responses": {
           "200": {
             "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "example": "any"
+                },
+                "password": {
+                  "example": "any"
+                },
+                "confirm_password": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
           }
         }
       }

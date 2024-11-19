@@ -77,6 +77,7 @@ app.post('/login',async(req,res) => {
   const user = await User.findOne({username});
   const isPasswordvalid =await bcrypt.compare(password, user.password);
   if(user == True && isPasswordvalid == True){
+    req.session.user = user.username;
     return res.redirect('/dashboard');
   }else{
     return res.render("message",{message: 'Invalid username or password'});

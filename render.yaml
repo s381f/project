@@ -1,0 +1,11 @@
+# Exported from Render on 2024-11-19T07:20:27Z
+services:
+  - type: web
+    name: project
+    runtime: docker
+    repo: https://github.com/s381f/project
+    plan: free
+    region: singapore
+    dockerContext: .
+    dockerfilePath: ./Dockerfile
+version: "1"

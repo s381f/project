@@ -76,7 +76,7 @@ app.post('/login',async(req,res) => {
   const{username, password} = req.body;
   const user = await User.findOne({username});
   const isPasswordvalid =await bcrypt.compare(password, user.password);
-  if(user == True && isPasswordvalid == True){
+  if(user && isPasswordvalid == true){
     req.session.username = user.username;
     return res.redirect('/dashboard');
   }else{

@@ -3,6 +3,9 @@ const dotenv = require('dotenv')
 dotenv.config()
 // endregion
 
+//Serve Static Files in Express
+app.use(express.static('public'));
+
 // region Express
 const express = require('express')
 const expressSession = require('express-session')

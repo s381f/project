@@ -24,8 +24,9 @@ app.use(bodyParser.urlencoded({extended: true}));
 const port = process.env.PORT || 3000
 // endregion
 
-//Static Files in Express
-app.use(express.static('public'));
+// Static files middleware
+app.use(express.static(path.join(__dirname, '../src/public')));
+// end Static files middleware
 
 const bcrypt = require('bcrypt');
 

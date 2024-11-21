@@ -24,6 +24,9 @@ app.use(bodyParser.urlencoded({extended: true}));
 const port = process.env.PORT || 3000
 // endregion
 
+//Static Files in Express
+app.use(express.static('public'));
+
 const bcrypt = require('bcrypt');
 
 // region MongoDB

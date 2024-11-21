@@ -3,10 +3,6 @@ const dotenv = require('dotenv')
 dotenv.config()
 // endregion
 
-//Static Files in Express
-app.use(express.static('public'));
-//endStatic Files in Express
-
 // region Express
 const express = require('express')
 const expressSession = require('express-session')
@@ -27,6 +23,9 @@ app.use(bodyParser.urlencoded());
 app.use(bodyParser.urlencoded({extended: true}));
 const port = process.env.PORT || 3000
 // endregion
+
+//Static Files in Express
+app.use(express.static('public'));
 
 const bcrypt = require('bcrypt');
 

@@ -24,9 +24,6 @@ app.use(bodyParser.urlencoded({extended: true}));
 const port = process.env.PORT || 3000
 // endregion
 
-//Static Files in Express
-app.use(express.static('public'));
-
 const bcrypt = require('bcrypt');
 
 // region MongoDB
@@ -159,6 +156,9 @@ app.options('/*', (req, res) => {
     message: `${req.path.substring(1)} - Unknown request!`
   });
 })
+
+//Static Files in Express
+app.use(express.static('public'));
 
 app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}`)

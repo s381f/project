@@ -179,12 +179,39 @@ app.get('/dashboard', (req, res) => {
   res.status(200).render('dashboard')
 })
 
-app.get('/deleteBook', (req, res) => {
-  res.status(200).render('deleteBook')
+app.get('/editBook',async (req, res) => {
+
+ 	await client.connect();
+    	const db = client.db("library");
+        const books = await findDocument(db, { _id: new ObjectId(bookId) });
+        res.status(200).render('editBook', { books}); // Pass the book to the template
+        
 })
 
-app.get('/editBook', (req, res) => {
-  res.status(200).render('editBook')
+app.post('/editBook', async (req, res) => {
+  const {title, author} = req.body;
+
+  try {
+    const criteria = {};
+
+    if (title) criteria.title = { $regex: title, $options: 'i' }; 
+    if (author) criteria.author = { $regex: author, $options: 'i' };
+    
+    await client.connect();
+    const db = client.db("library");
+    const books = await updateDocument(db, criteria);
+    
+    
+    res.status(200).json('editBook');
+  } catch (error) {
+    res.status(500).render('message', {
+      message: 'Error edit book'
+    });
+  }
+});
+
+app.get('/deleteBook', (req, res) => {
+  res.status(200).render('deleteBook')
 })
 
 app.get('/login', (req, res) => {

@@ -87,10 +87,7 @@
             "schema": {
               "type": "object",
               "properties": {
-                "title": {
-                  "example": "any"
-                },
-                "author": {
+                "keyword": {
                   "example": "any"
                 }
               }

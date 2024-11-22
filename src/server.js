@@ -67,7 +67,7 @@ app.get('/api-docs', swaggerUi.setup(swaggerDocument));
 const insertDocument = async (db, doc) => {
   var collection = db.collection(collectionName);
   let results = await collection.insertOne(Book);
-  console.log("Inserted document:", results);
+  // console.log("Inserted document:", results);
   return results;
 }
 
@@ -75,7 +75,7 @@ const insertDocument = async (db, doc) => {
 const findDocument = async (db, criteria) => {
   var collection = db.collection(collectionName);
   let results = await collection.find(criteria).toArray();
-  console.log("Found the documents:", results);
+  // console.log("Found the documents:", results);
   return results;
 }
 
@@ -83,14 +83,14 @@ const findDocument = async (db, criteria) => {
 const updateDocument = async (db, criteria, updateData) => {
   var collection = db.collection(collectionName);
   let results = await collection.updateOne(criteria, {$set: updateData});
-  console.log("update one document:" + JSON.stringify(results));
+  // console.log("update one document:" + JSON.stringify(results));
   return results;
 }
 
 const deleteDocument = async (db, criteria) => {
   var collection = db.collection(collectionName);
   let results = await collection.deleteOne(criteria);
-  console.log("delete one document:" + JSON.stringify(results));
+  // console.log("delete one document:" + JSON.stringify(results));
   return results;
 }
 
@@ -179,12 +179,38 @@ app.get('/dashboard', (req, res) => {
   res.status(200).render('dashboard')
 })
 
-app.get('/deleteBook', (req, res) => {
-  res.status(200).render('deleteBook')
+app.get('/editBook', async (req, res) => {
+  const {id} = req.query;
+  await client.connect();
+  const db = client.db("library");
+  const book = await findDocument(db, {_id: new ObjectId(id)});
+  res.status(200).render('editBook', {book: book[0]}); // Pass the book to the template
 })
 
-app.get('/editBook', (req, res) => {
-  res.status(200).render('editBook')
+app.post('/editBook', async (req, res) => {
+  const {id, title, author} = req.body;
+
+  try {
+    await client.connect();
+    const db = client.db("library");
+    await updateDocument(
+      db,
+      {_id: new ObjectId(id)},
+      {
+        title: title,
+        author: author
+      }
+    );
+    res.redirect(`/searchBooks`);
+  } catch (error) {
+    res.status(500).render('message', {
+      message: 'Error edit book'
+    });
+  }
+});
+
+app.get('/deleteBook', (req, res) => {
+  res.status(200).render('deleteBook')
 })
 
 app.get('/login', (req, res) => {
@@ -240,41 +266,41 @@ app.post('/signup', async (req, res) => {
   return res.redirect('/')
 })
 
-app.get('/*', (req, res) => {
-  res.status(404).render('message', {
-    message: `${req.path.substring(1)} - Unknown request!`
-  });
-})
-
-app.post('/*', (req, res) => {
-  res.status(404).render('message', {
-    message: `${req.path.substring(1)} - Unknown request!`
-  });
-})
-
-app.patch('/*', (req, res) => {
-  res.status(404).render('message', {
-    message: `${req.path.substring(1)} - Unknown request!`
-  });
-})
-
-app.put('/*', (req, res) => {
-  res.status(404).render('message', {
-    message: `${req.path.substring(1)} - Unknown request!`
-  });
-})
-
-app.delete('/*', (req, res) => {
-  res.status(404).render('message', {
-    message: `${req.path.substring(1)} - Unknown request!`
-  });
-})
-
-app.options('/*', (req, res) => {
-  res.status(404).render('message', {
-    message: `${req.path.substring(1)} - Unknown request!`
-  });
-})
+// app.get('/*', (req, res) => {
+//   res.status(404).render('message', {
+//     message: `${req.path.substring(1)} - Unknown request!`
+//   });
+// })
+//
+// app.post('/*', (req, res) => {
+//   res.status(404).render('message', {
+//     message: `${req.path.substring(1)} - Unknown request!`
+//   });
+// })
+//
+// app.patch('/*', (req, res) => {
+//   res.status(404).render('message', {
+//     message: `${req.path.substring(1)} - Unknown request!`
+//   });
+// })
+//
+// app.put('/*', (req, res) => {
+//   res.status(404).render('message', {
+//     message: `${req.path.substring(1)} - Unknown request!`
+//   });
+// })
+//
+// app.delete('/*', (req, res) => {
+//   res.status(404).render('message', {
+//     message: `${req.path.substring(1)} - Unknown request!`
+//   });
+// })
+//
+// app.options('/*', (req, res) => {
+//   res.status(404).render('message', {
+//     message: `${req.path.substring(1)} - Unknown request!`
+//   });
+// })
 
 app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}`)

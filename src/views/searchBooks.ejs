@@ -141,7 +141,7 @@
                 <td><%= book.title %></td>
                 <td><%= book.author %></td>
                 <td>
-                    <a href="/books/<%= book._id %>/edit">Edit</a>
+                    <a href="/editBook?id=<%= book._id %>">Edit</a>
                     <a href="/books/<%= book._id %>/delete">Delete</a>
                 </td>
             </tr>
@@ -181,7 +181,7 @@
                         <td>${book.title}</td>
                         <td>${book.author}</td>
                         <td>
-                            <a href="/books/${book._id}/edit">Edit</a>
+                            <a href="/editBook?id=${book._id}">Edit</a>
                             <a href="/books/${book._id}/delete">Delete</a>
                         </td>
                     `;

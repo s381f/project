@@ -32,6 +32,7 @@ const bcrypt = require('bcrypt');
 
 // region MongoDB
 const {User} = require("./db/mongodb");
+const {Book} = require("./db/mongodb");
 // endregion
 
 // region Swagger
@@ -48,18 +49,93 @@ swaggerAutogen(outputFile, ["./server.js"], doc).then();
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 const userSchema = require("./models/user");
+const bookSchema = require("./models/book");
 app.use('/api-docs', swaggerUi.serve)
 app.get('/api-docs', swaggerUi.setup(swaggerDocument));
 // endregion
+////////////////////////////////////////
+const insertDocument = async (db, doc) => { 
+	var collection = db.collection(collectionName); 
+	let results = await collection.insertOne(Book); 
+	console.log("Inserted document:", result); 
+	return results;} 
 
+
+const findDocument = async (db, criteria) => {
+    var collection = db.collection('books'); 
+    let results = await collection.find(criteria).toArray(); 
+   console.log("Found the documents:", results);
+    return results;
+}
+
+
+const updateDocument = async (db, criteria, updateData) => {
+	    var collection = db.collection(collectionName);
+	    let results = await collection.updateOne(criteria, { $set: updateData });
+		console.log("update one document:" + JSON.stringify(results));
+	    return results;
+} 
+
+const deleteDocument = async (db, criteria) => {
+	    var collection = db.collection(collectionName);
+	    let results = await collection.deleteOne(criteria);
+		console.log("delete one document:" + JSON.stringify(results));
+	    return results;
+}
+///////////////////////////////////////
 
 app.get('/', async (req, res) => {
   res.status(200).render('index')
 })
 
 app.get('/createBook', (req, res) => {
-  res.status(200).render('createBook')
-})
+  res.status(200).render('createBook'); // Render the form, do not call handle_Create here
+});
+
+app.post('/createBook', async (req, res) => {
+  const { title, author} = req.body;
+
+  try {
+      const newBook = new Book({
+          title,
+          author,
+      });
+      await newBook.validate();
+      await newBook.save();
+      res.status(201).render('message', {
+          message: 'Book created successfully'
+      });
+  } catch (error) {
+      res.status(500).render('message', {
+          message: 'Error creating book'
+      });
+  }
+});
+
+app.get('/searchBooks', (req, res) => {
+  res.status(200).render('searchBooks',{ books }); 
+});
+
+app.post('/searchBooks', async (req, res) => {
+  const { title, author } = req.body; 
+
+  try {
+    const criteria = {};
+    if (title) criteria.title = title;
+    if (author) criteria.author = author;
+
+    const books = await findDocument(db, criteria);
+
+    res.status(200).render('searchBooks', { books }); 
+  } catch (error) {
+    console.error('Error searching for books:', error);
+    res.status(500).render('message', {
+      message: 'Error searching for books',
+    });
+  }
+});
+
+
 
 app.get('/dashboard', (req, res) => {
   res.status(200).render('dashboard')
@@ -85,13 +161,16 @@ app.post('/login',async(req,res) => {
   }else{
     return res.render("message",{message: 'Invalid username or password'});
   }
-})
 app.get('/logout', (req,res) =>{
   req.session = null;
   res.redirect('/login');
 })
 app.get('/searchBooks', (req, res) => {
   res.status(200).render('searchBooks')
+})
+app.get('/logout', (req,res) =>{
+  req.session = null;
+  res.redirect('/login');
 })
 
 app.get('/signup', (req, res) => {

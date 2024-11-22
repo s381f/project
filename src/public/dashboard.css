@@ -13,6 +13,7 @@ body {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
+    margin-top: 70px;
 }
 nav a {
     display: inline-block;
@@ -46,7 +47,4 @@ nav a:hover {
     color: #fff;
     font-size: 20px;
     margin-left: 20px;
-}
-.container {
-    margin-top: 70px;
 }

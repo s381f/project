@@ -42,6 +42,7 @@ const
       deprecationErrors: true,
     }
   });
+const collectionName = "books"
 // endregion
 
 // region Swagger
@@ -66,13 +67,13 @@ app.get('/api-docs', swaggerUi.setup(swaggerDocument));
 const insertDocument = async (db, doc) => {
   var collection = db.collection(collectionName);
   let results = await collection.insertOne(Book);
-  console.log("Inserted document:", result);
+  console.log("Inserted document:", results);
   return results;
 }
 
 
 const findDocument = async (db, criteria) => {
-  var collection = db.collection('books');
+  var collection = db.collection(collectionName);
   let results = await collection.find(criteria).toArray();
   console.log("Found the documents:", results);
   return results;
@@ -92,7 +93,12 @@ const deleteDocument = async (db, criteria) => {
   console.log("delete one document:" + JSON.stringify(results));
   return results;
 }
+
 ///////////////////////////////////////
+
+function escapeRegExp(string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") // $& means the whole matched string
+}
 
 app.get('/', async (req, res) => {
   res.status(200).render('index')
@@ -124,28 +130,42 @@ app.post('/createBook', async (req, res) => {
 
 app.get('/searchBooks', async (req, res) => {
   await client.connect();
-  console.log("Connected successfully to server");
   const db = client.db("library");
-  
+
   const books = await findDocument(db, {});
   res.status(200).render('searchBooks', {books});
 });
 
 app.post('/searchBooks', async (req, res) => {
-  const {title, author} = req.body;
+  const {keyword} = req.body;
 
   try {
     const criteria = {};
-    if (title) criteria.title = title;
-    if (author) criteria.author = author;
+
+    const or = []
+    if (keyword) {
+      const k = escapeRegExp(keyword);
+      or.push([
+        {title: {$regex: k, $options: 'i'}},
+        {author: {$regex: k, $options: 'i'}},
+      ]);
+    }
+
+    if (or.length > 1) {
+      criteria.$and = or.map(o => {
+        return {$or: o}
+      })
+    } else if (or.length === 1) {
+      criteria.$or = or[0]
+    }
 
     await client.connect();
-    console.log("Connected successfully to server");
     const db = client.db("library");
+
 
     const books = await findDocument(db, criteria);
 
-    res.status(200).render('searchBooks', {books});
+    res.status(200).json({books});
   } catch (error) {
     console.error('Error searching for books:', error);
     res.status(500).render('message', {
@@ -173,8 +193,8 @@ app.get('/login', (req, res) => {
 app.post('/login', async (req, res) => {
   const {username, password} = req.body;
   const user = await User.findOne({username});
-  const isPasswordvalid = await bcrypt.compare(password, user.password);
-  if (user && isPasswordvalid == true) {
+  const isPasswordValid = await bcrypt.compare(password, user.password);
+  if (user && isPasswordValid === true) {
     return res.redirect('/dashboard');
   } else {
     return res.render("message", {message: 'Invalid username or password'});
@@ -183,9 +203,6 @@ app.post('/login', async (req, res) => {
 app.get('/logout', (req, res) => {
   req.session = null;
   res.redirect('/login');
-})
-app.get('/searchBooks', (req, res) => {
-  res.status(200).render('searchBooks')
 })
 app.get('/logout', (req, res) => {
   req.session = null;

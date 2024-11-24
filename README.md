@@ -60,11 +60,11 @@ signup.ejs
 ### CRUD Web Pages
 #### Create
 - **Steps:**
-  1. In dashboard page, click the "Add Book" to Navigate to the createBook page.
-  2. Click the "Add New Item" button.
-  3. Fill in the required fields in the form.
+1. In dashboard page, click the "Add Book" to Navigate to the createBook page.
+2. Click the "Add New Item" button.
+3. Fill in the required fields in the form.
    - **Title**
    - **Auther**
-  4. Click the "Add Book" button to create a new item.
+4. Click the "Add Book" button to create a new book.
 
 ### RESTful CRUD Services

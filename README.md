@@ -11,15 +11,24 @@ Zhim Chin Pong 13184669
 
 ### public (folder)
 Include all pages css file:
-createBook.css
-dashboard.css
-deleteBook.css
-editBook.css
-index.css
-login_signup.css
+createBook.css,
+dashboard.css,
+deleteBook.css,
+editBook.css,
+index.css,
+login_signup.css,
 searchBooks.css
 
 ### views (folder)
+Include all pages EJS and UI file:
+createBook.ejs,
+dashboard.ejs,
+deleteBook.ejs,
+editBook.ejs,
+index.ejs,
+login.ejs,
+searchBooks.ejs,
+signup.ejs
 
 ### models (folder)
 

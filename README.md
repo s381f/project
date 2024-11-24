@@ -37,6 +37,15 @@ signup.ejs
 ## Operation Guides
 
 ### Login/Logout Pages
+#### Valid Login Information
+- **Username:** admin
+- **Password:** admin
+#### Sign-In Steps
+1. Open the login page of the application.
+2. Enter the valid username and password.
+3. Click the "Login" button.
+4. Upon successful login, you will be redirected to the dashboard page.
+5. To logout, click on the "Logout" button located in the middle of the page.
 
 ### CRUD Web Pages
 

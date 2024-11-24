@@ -6,7 +6,7 @@
 
 | Student Name    | SID      | responsible parts                                                                                                                    |
 |-----------------|----------|--------------------------------------------------------------------------------------------------------------------------------------|
-| Zhim Chin Pong  | 13184669 |                                                                                                                                      |
+| Zhim Chin Pong  | 13184669 | - All css file set up<br/>- All ejs(Ui) file set up <br/>                                                                              |
 | Tsang Cheuk Nok | 13745730 | - book model related<br/>- create and delete book                                                                                                                                        |
 | Fung Tsun Hin   | 1208625  |                                                                                                                                    |
 | Wu Ka Wai       | 13711683 | - project base set up<br/>- docker set up<br/>- mongodb owner<br/>- cloud server setup<br/>- edit book<br/>- Swagger API Docs Set up |

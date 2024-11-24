@@ -2,7 +2,8 @@
 ## Group Info
 Group No. 33
 Student Name and SID:
-Zhim Chin Pong 13184669
+- Zhim Chin Pong 13184669
+- 
 
 ## Project File Intro
 ### server.js
@@ -40,7 +41,16 @@ signup.ejs
 #### Valid Login Information
 - **Username:** admin
 - **Password:** admin
-#### Sign-In Steps
+
+#### Sign-Up Steps
+1. Navigate to the sign-up page.
+2. Fill in the required fields:
+   - **Username**
+   - **Password**
+   - **Confirm Password**
+3. Click the "Sign Up" button.
+4. Upon successful sign-up, you will be redirected to the index page.
+#### Login Steps
 1. Open the login page.
 2. Enter the valid username and password.
 3. Click the "Login" button.

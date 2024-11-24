@@ -8,7 +8,7 @@
 |-----------------|----------|--------------------------------------------------------------------------------------------------------------------------------------|
 | Zhim Chin Pong  | 13184669 |                                                                                                                                      |
 | Tsang Cheuk Nok | 13745730 |                                                                                                                                      |
-| Fung Tsun Hin   | 1208625  |                                                                                                                                      |
+| Fung Tsun Hin   | 1208625  | - book.js related<br/>- create and delete book                                                                                                                                      |
 | Wu Ka Wai       | 13711683 | - project base set up<br/>- docker set up<br/>- mongodb owner<br/>- cloud server setup<br/>- edit book<br/>- Swagger API Docs Set up |
 | Yip Wing Hei    | 13119940 |                                                                                                                                      |
 

@@ -1,5 +1,12 @@
 <html lang="en">
 <body>
-<b><%= message %></b>
-</body>
+<script>
+        // Show alert message
+        alert("<%= message %>");
+        
+        // Redirect to the specified URL after a short delay
+        setTimeout(() => {
+            window.location.href = "<%= redirectUrl %>";
+        }, 2000); // Redirect after 2 seconds
+    </script>
 </html>

@@ -41,7 +41,7 @@ signup.ejs
 - **Username:** admin
 - **Password:** admin
 #### Sign-In Steps
-1. Open the login page of the application.
+1. Open the login page.
 2. Enter the valid username and password.
 3. Click the "Login" button.
 4. Upon successful login, you will be redirected to the dashboard page.

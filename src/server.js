@@ -89,7 +89,7 @@ const updateDocument = async (db, criteria, updateData) => {
 
 const deleteDocument = async (db, criteria, deleteData) => {
   var collection = db.collection(collectionName);
-  let results = await collection.deleteOne(criteria,{$set: deleteData});
+  let results = await collection.deleteOne(criteria, {$set: deleteData});
   // console.log("delete one document:" + JSON.stringify(results));
   return results;
 }
@@ -218,12 +218,12 @@ app.get('/deleteBook', async (req, res) => {
 })
 
 app.post('/deleteBook', async (req, res) => {
-  const { id,title, author } = req.body
+  const {id, title, author} = req.body
 
   try {
     await client.connect();
     const db = client.db("library");
-  const book = await deleteDocument(db, { _id: new ObjectId(id) });
+    const book = await deleteDocument(db, {_id: new ObjectId(id)});
     res.redirect(`/searchBooks`);
   } catch (error) {
     res.status(500).render('message', {
@@ -231,8 +231,6 @@ app.post('/deleteBook', async (req, res) => {
     });
   }
 });
-
-
 
 
 app.get('/login', (req, res) => {
@@ -249,10 +247,6 @@ app.post('/login', async (req, res) => {
     return res.render("message", {message: 'Invalid username or password'});
   }
 });
-app.get('/logout', (req, res) => {
-  req.session = null;
-  res.redirect('/login');
-})
 app.get('/logout', (req, res) => {
   req.session = null;
   res.redirect('/login');
@@ -289,41 +283,41 @@ app.post('/signup', async (req, res) => {
   return res.redirect('/')
 })
 
-// app.get('/*', (req, res) => {
-//   res.status(404).render('message', {
-//     message: `${req.path.substring(1)} - Unknown request!`
-//   });
-// })
-//
-// app.post('/*', (req, res) => {
-//   res.status(404).render('message', {
-//     message: `${req.path.substring(1)} - Unknown request!`
-//   });
-// })
-//
-// app.patch('/*', (req, res) => {
-//   res.status(404).render('message', {
-//     message: `${req.path.substring(1)} - Unknown request!`
-//   });
-// })
-//
-// app.put('/*', (req, res) => {
-//   res.status(404).render('message', {
-//     message: `${req.path.substring(1)} - Unknown request!`
-//   });
-// })
-//
-// app.delete('/*', (req, res) => {
-//   res.status(404).render('message', {
-//     message: `${req.path.substring(1)} - Unknown request!`
-//   });
-// })
-//
-// app.options('/*', (req, res) => {
-//   res.status(404).render('message', {
-//     message: `${req.path.substring(1)} - Unknown request!`
-//   });
-// })
+app.get('/*', (req, res) => {
+  res.status(404).render('message', {
+    message: `${req.path.substring(1)} - Unknown request!`
+  });
+})
+
+app.post('/*', (req, res) => {
+  res.status(404).render('message', {
+    message: `${req.path.substring(1)} - Unknown request!`
+  });
+})
+
+app.patch('/*', (req, res) => {
+  res.status(404).render('message', {
+    message: `${req.path.substring(1)} - Unknown request!`
+  });
+})
+
+app.put('/*', (req, res) => {
+  res.status(404).render('message', {
+    message: `${req.path.substring(1)} - Unknown request!`
+  });
+})
+
+app.delete('/*', (req, res) => {
+  res.status(404).render('message', {
+    message: `${req.path.substring(1)} - Unknown request!`
+  });
+})
+
+app.options('/*', (req, res) => {
+  res.status(404).render('message', {
+    message: `${req.path.substring(1)} - Unknown request!`
+  });
+})
 
 app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}`)

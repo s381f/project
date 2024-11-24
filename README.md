@@ -1,10 +1,16 @@
 # Project Name: Book Management System
-## Group Info
-### Group No. 33
-#### Student Name and SID:
-- Zhim Chin Pong 13184669
-- Tsang Cheuk Nok 13745730
-- 
+
+## Cloud-based Server URL : [https://project-7wpm.onrender.com](https://project-7wpm.onrender.com)
+
+## Group Info (Group No. 33)
+
+| Student Name    | SID      | responsible parts                                                                                                                    |
+|-----------------|----------|--------------------------------------------------------------------------------------------------------------------------------------|
+| Zhim Chin Pong  | 13184669 |                                                                                                                                      |
+| Tsang Cheuk Nok | 13745730 |                                                                                                                                      |
+| Fung Tsun Hin   | 1208625  |                                                                                                                                      |
+| Wu Ka Wai       | 13711683 | - project base set up<br/>- docker set up<br/>- mongodb owner<br/>- cloud server setup<br/>- edit book<br/>- Swagger API Docs Set up |
+| Yip Wing Hei    | 13119940 |                                                                                                                                      |
 
 ## Project File Intro
 ### server.js
@@ -34,7 +40,6 @@ signup.ejs
 
 ### models (folder)
 
-## Cloud-based Server URL
 
 ## Operation Guides
 

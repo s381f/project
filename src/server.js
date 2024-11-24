@@ -87,9 +87,9 @@ const updateDocument = async (db, criteria, updateData) => {
   return results;
 }
 
-const deleteDocument = async (db, criteria) => {
+const deleteDocument = async (db, criteria, deleteData) => {
   var collection = db.collection(collectionName);
-  let results = await collection.deleteOne(criteria);
+  let results = await collection.deleteOne(criteria,{$set: deleteData});
   // console.log("delete one document:" + JSON.stringify(results));
   return results;
 }
@@ -209,9 +209,31 @@ app.post('/editBook', async (req, res) => {
   }
 });
 
-app.get('/deleteBook', (req, res) => {
-  res.status(200).render('deleteBook')
+app.get('/deleteBook', async (req, res) => {
+  const {id} = req.query;
+  await client.connect();
+  const db = client.db("library");
+  const book = await findDocument(db, {_id: new ObjectId(id)});
+  res.status(200).render('deleteBook', {book: book[0]});
 })
+
+app.post('/deleteBook', async (req, res) => {
+  const { id,title, author } = req.body
+
+  try {
+    await client.connect();
+    const db = client.db("library");
+  const book = await deleteDocument(db, { _id: new ObjectId(id) });
+    res.redirect(`/searchBooks`);
+  } catch (error) {
+    res.status(500).render('message', {
+      message: 'Error delete book'
+    });
+  }
+});
+
+
+
 
 app.get('/login', (req, res) => {
   res.status(200).render('login')
@@ -221,6 +243,7 @@ app.post('/login', async (req, res) => {
   const user = await User.findOne({username});
   const isPasswordValid = await bcrypt.compare(password, user.password);
   if (user && isPasswordValid === true) {
+    req.session.username = user.username;
     return res.redirect('/dashboard');
   } else {
     return res.render("message", {message: 'Invalid username or password'});

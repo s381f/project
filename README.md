@@ -68,4 +68,24 @@ signup.ejs
    - **Auther**
 4. Click the "Add Book" button to create a new book.
 
+#### Read
+- **Steps:**
+ 1. In dashboard page, click the "Search Books" to Navigate to the searchBooks page.
+ 2. In searchBooks page, there has the search input field where the user can enter keywords to search for books.
+ 3. Search: This is the button the user can click to initiate the search.
+ 4. The details of the book will be displayed on the below search results table.
+
+#### Update
+- **Steps:**
+ 1. In dashboard page, click the "Search Books" to Navigate to the searchBooks page.
+ 2. Click the "Edit" button next to the item you wish to update.
+ 3. Modify the necessary fields in the form.
+ 4. Click the "Update Book" button to update the book.
+
+#### Delete
+- **Steps:**
+ 1. In dashboard page, click the "Search Books" to Navigate to the searchBooks page.
+ 2. Click the "Delete" button next to the item you want to remove.
+ 3. Confirm the "Delete Book" button to delete the book.
+ 4. If you don't want to delete, you can click the "Cancel" button to back to the searchBooks page.
 ### RESTful CRUD Services

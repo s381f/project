@@ -118,7 +118,10 @@ app.post('/createBook', async (req, res) => {
     });
     await newBook.validate();
     await newBook.save();
-    res.redirect('/dashboard');
+    res.render('message', {
+      message: 'Book created successfully!',
+      redirectUrl: '/dashboard'
+    });
   } catch (error) {
     res.status(500).render('message', {
       message: 'Error creating book'

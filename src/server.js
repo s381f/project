@@ -244,14 +244,24 @@ app.get('/login', (req, res) => {
   res.status(200).render('login')
 })
 app.post('/login', async (req, res) => {
-  const {username, password} = req.body;
-  const user = await User.findOne({username});
+  const { username, password } = req.body;
+  const user = await User.findOne({ username });
+
+  // Check if the user was found
+  if (!user) {
+    return res.render("message", { message: 'Invalid username or password' ,
+    redirectUrl: '/login'});
+  }
+
+  // Now it's safe to access user.password
   const isPasswordValid = await bcrypt.compare(password, user.password);
-  if (user && isPasswordValid === true) {
+
+  if (isPasswordValid) {
     req.session.username = user.username;
     return res.redirect('/dashboard');
   } else {
-    return res.render("message", {message: 'Invalid username or password'});
+    return res.render("message", { message: 'Invalid username or password',
+    redirectUrl: '/login' });
   }
 });
 app.get('/logout', (req, res) => {
@@ -264,31 +274,34 @@ app.get('/signup', (req, res) => {
 })
 
 app.post('/signup', async (req, res) => {
-  let {username, password, confirm_password} = req.body;
+  let { username, password, confirm_password } = req.body;
 
-  let exists = await User.find({
-    username: username,
-  }).exec()
+  let exists = await User.find({ username }).exec();
 
+  // Check if the user already exists
   if (exists.length > 0) {
-    res.render("message", {
-      message: 'User already exists'
-    })
+    return res.render("message", {
+      message: 'User already exists',
+      redirectUrl: '/signup'
+    });
   }
 
+  // Check if passwords match
   if (password && confirm_password && confirm_password !== password) {
-    res.render("message", {
-      message: 'Passwords do not match'
-    })
+    return res.render("message", {
+      message: 'Passwords do not match',
+      redirectUrl: '/signup'
+    });
   }
 
-  password = await bcrypt.hashSync(password, 10)
+  // Hash the password and create a new user
+  password = await bcrypt.hash(password, 10);
+  const user = new User({ username, password });
+  await user.save();
 
-  const user = new User({username, password})
-  await user.save()
-
-  return res.redirect('/')
-})
+  // Redirect to login after successful signup
+  return res.redirect('/login');
+});
 
 app.get('/*', (req, res) => {
   res.status(404).render('message', {

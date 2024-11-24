@@ -72,20 +72,20 @@ app.get('/editBook', (req, res) => {
 app.get('/login', (req, res) => {
   res.status(200).render('login')
 })
-//app.post('/login',async(req,res) => {
-//  const{username, password} = req.body;
-//  const user = await User.findOne({username});
-//  const isPasswordvalid =await bcrypt.compare(password, user.password);
-//  if(user && isPasswordvalid == true){
-//    req.session.username = user.username;
-//    return res.redirect('/dashboard');
-//  }else{
-//    return res.render("message",{message: 'Invalid username or password'});
-//  }
-//})
-//app.get('/logout', (req,res) =>{
-//  req.session = null;
-//  res.redirect('/login');
+app.post('/login',async(req,res) => {
+  const{username, password} = req.body;
+  const user = await User.findOne({username});
+  const isPasswordvalid =await bcrypt.compare(password, user.password);
+  if(user && isPasswordvalid == true){
+    req.session.username = user.username;
+    return res.redirect('/dashboard');
+  }else{
+    return res.render("message",{message: 'Invalid username or password'});
+  }
+})
+app.get('/logout', (req,res) =>{
+  req.session = null;
+  res.redirect('/login');
 })
 app.get('/searchBooks', (req, res) => {
   res.status(200).render('searchBooks')

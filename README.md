@@ -10,7 +10,7 @@
 | Tsang Cheuk Nok | 13745730 | - book model related<br/>- create and delete book                                                                                                                                        |
 | Fung Tsun Hin   | 1208625  |                                                                                                                                    |
 | Wu Ka Wai       | 13711683 | - project base set up<br/>- docker set up<br/>- mongodb owner<br/>- cloud server setup<br/>- edit book<br/>- Swagger API Docs Set up |
-| Yip Wing Hei    | 13119940 |                                                                                                                                      |
+| Yip Wing Hei    | 13119940 | - insert/find/update/deletedocument<br/>-search and delete book                                                                      |
 
 ## Project File Intro
 ### server.js

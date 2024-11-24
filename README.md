@@ -10,6 +10,14 @@ Zhim Chin Pong 13184669
 ### package.json
 
 ### public (folder)
+Include all pages css file:
+createBook.css
+dashboard.css
+deleteBook.css
+editBook.css
+index.css
+login_signup.css
+searchBooks.css
 
 ### views (folder)
 
@@ -24,5 +32,3 @@ Zhim Chin Pong 13184669
 ### CRUD Web Pages
 
 ### RESTful CRUD Services
-
-## Notes

@@ -3,19 +3,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Book</title>
-    
+    <link rel="stylesheet" href="/createBook.css">
 </head>
 <body>
+    <div class="navbar">
+        <span class="navbar-title">Book Management System</span>
+        <div class="navbar-links">
+            <a href="/dashboard">Dashboard</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </div>
     <div class="container">
         <h2>Add a New Book</h2>
-        <form action="/books" method="POST">
+        <form action="/createBook" method="POST">
             <label for="title">Title:</label>
             <input type="text" id="title" name="title" required>
             <label for="author">Author:</label>
             <input type="text" id="author" name="author" required>
             <button type="submit">Add Book</button>
         </form>
-         <a href="/dashboard">Back to Dashboard</a> 
+        <a href="/dashboard">Back to Dashboard</a>
+        <hr style="visibility: hidden;">
+        <a href="/logout">Logout</a>
     </div>
 </body>
 </html>

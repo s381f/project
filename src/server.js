@@ -202,7 +202,10 @@ app.post('/editBook', async (req, res) => {
         author: author
       }
     );
-    res.redirect(`/searchBooks`);
+    res.render('message', {
+      message: 'Book edited successfully!',
+      redirectUrl: '/searchBooks'
+    });
   } catch (error) {
     res.status(500).render('message', {
       message: 'Error edit book'
@@ -225,7 +228,10 @@ app.post('/deleteBook', async (req, res) => {
     await client.connect();
     const db = client.db("library");
     const book = await deleteDocument(db, {_id: new ObjectId(id)});
-    res.redirect(`/searchBooks`);
+    res.render('message', {
+      message: 'Book deleted successfully!',
+      redirectUrl: '/searchBooks'
+    });
   } catch (error) {
     res.status(500).render('message', {
       message: 'Error delete book'

@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "description": ""
   },
-  "host": "localhost:3030",
+  "host": "project-7wpm.onrender.com",
   "basePath": "/",
   "schemes": [
     "http"
